@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Friends from './Component/Friends';
-import Greetings from "./Component/Greetings";
-import Origin from "./Component/Origin";
-
+// import Friends from './Component/Friends';
+// import Greetings from "./Component/Greetings";
+// import Origin from "./Component/Origin";
+import Homepage from "./Component/Homepage";
 //functional base component
 // const Greetings = () => {
 //   return (
@@ -26,9 +26,10 @@ import Origin from "./Component/Origin";
 const App = () => {
   return (
     <>
-      <Greetings Name="Mahatab" />
-      <Origin country="Bangaldesh" />
-      <Friends friends={['Shuvo','Adnan','Rohit']} />
+ 
+      <Homepage />
+      
+      
     </>
   );
 };

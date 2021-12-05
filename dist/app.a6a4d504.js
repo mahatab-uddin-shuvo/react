@@ -29146,7 +29146,80 @@ if ("development" !== 'production') {
   // http://fb.me/prop-types-in-prod
   module.exports = require('./factoryWithThrowingShims')();
 }
-},{"react-is":"node_modules/react-is/index.js","./factoryWithTypeCheckers":"node_modules/prop-types/factoryWithTypeCheckers.js"}],"src/Component/Friends.js":[function(require,module,exports) {
+},{"react-is":"node_modules/react-is/index.js","./factoryWithTypeCheckers":"node_modules/prop-types/factoryWithTypeCheckers.js"}],"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/bootstrap/dist/css/bootstrap.min.css":[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+},{"_css_loader":"node_modules/parcel-bundler/src/builtins/css-loader.js"}],"src/Component/Content.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29158,22 +29231,43 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+require("bootstrap/dist/css/bootstrap.min.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Friends = function Friends(props) {
-  return /*#__PURE__*/_react.default.createElement("ul", null, props.friends.map(function (friend, index) {
-    return /*#__PURE__*/_react.default.createElement("li", {
-      key: index
-    }, friend);
-  }));
+var Content = function Content() {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "row",
+    style: {
+      columnGap: '10px',
+      height: '600px'
+    }
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-md-8",
+    style: {
+      border: "1px solid red"
+    }
+  }, /*#__PURE__*/_react.default.createElement("h5", {
+    style: {
+      textAlign: "center"
+    }
+  }, "Content")), /*#__PURE__*/_react.default.createElement("div", {
+    className: "col-md-3",
+    style: {
+      border: "1px solid red"
+    }
+  }, /*#__PURE__*/_react.default.createElement("h5", {
+    style: {
+      textAlign: "center"
+    }
+  }, "Side bar"))));
 };
 
-Friends.prototype = {
-  friends: _propTypes.default.array.isRequired
-};
-var _default = Friends;
+var _default = Content;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","prop-types":"node_modules/prop-types/index.js"}],"src/Component/Greetings.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","prop-types":"node_modules/prop-types/index.js","bootstrap/dist/css/bootstrap.min.css":"node_modules/bootstrap/dist/css/bootstrap.min.css"}],"src/Component/Footer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29183,33 +29277,24 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//functional base component
-var Greetings = function Greetings(props) {
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, "Hello ", props.Name));
-}; //Class Base Component
-// class Greetings extends Component {
-//   constructor() {
-//     super();
-//   }
-//   render() {
-//     return <h1>Hello {this.props.name}</h1>;
-//   }
-// }
-
-
-Greetings.defaultProps = {
-  Name: 'Samim'
+var Footer = function Footer() {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      border: '1px solid black',
+      margin: '10px'
+    }
+  }, /*#__PURE__*/_react.default.createElement("h5", {
+    style: {
+      textAlign: 'center'
+    }
+  }, "Footer"));
 };
-Greetings.propTypes = {
-  Name: _propTypes.default.string.isRequired
-};
-var _default = Greetings;
+
+var _default = Footer;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","prop-types":"node_modules/prop-types/index.js"}],"src/Component/Origin.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js"}],"src/Component/Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -29219,34 +29304,72 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _propTypes = _interopRequireDefault(require("prop-types"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Header = function Header() {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      margin: '10px',
+      border: '1px solid red'
+    }
+  }, /*#__PURE__*/_react.default.createElement("h5", {
+    style: {
+      textAlign: 'center'
+    }
+  }, "Header"));
+};
+
+var _default = Header;
+exports.default = _default;
+},{"react":"node_modules/react/index.js"}],"src/Component/Homepage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Content = _interopRequireDefault(require("./Content"));
+
+var _Footer = _interopRequireDefault(require("./Footer"));
+
+var _Header = _interopRequireDefault(require("./Header"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Origin = function Origin(props) {
-  return /*#__PURE__*/_react.default.createElement("p", null, "You are from ", props.country);
+var Homepage = function Homepage() {
+  return /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      border: '1px solid green',
+      height: '780px'
+    }
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "row"
+  }), /*#__PURE__*/_react.default.createElement("h4", {
+    style: {
+      paddingLeft: '10px'
+    }
+  }, "Homepage"), /*#__PURE__*/_react.default.createElement(_Header.default, null), /*#__PURE__*/_react.default.createElement(_Content.default, null), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
 };
 
-Origin.prototype = {
-  country: _propTypes.default.string.isRequired
-};
-var _default = Origin;
+var _default = Homepage;
 exports.default = _default;
-},{"react":"node_modules/react/index.js","prop-types":"node_modules/prop-types/index.js"}],"src/app.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./Content":"src/Component/Content.js","./Footer":"src/Component/Footer.js","./Header":"src/Component/Header.js"}],"src/app.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-var _Friends = _interopRequireDefault(require("./Component/Friends"));
-
-var _Greetings = _interopRequireDefault(require("./Component/Greetings"));
-
-var _Origin = _interopRequireDefault(require("./Component/Origin"));
+var _Homepage = _interopRequireDefault(require("./Component/Homepage"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import Friends from './Component/Friends';
+// import Greetings from "./Component/Greetings";
+// import Origin from "./Component/Origin";
 //functional base component
 // const Greetings = () => {
 //   return (
@@ -29265,17 +29388,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // }
 // }
 var App = function App() {
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Greetings.default, {
-    Name: "Mahatab"
-  }), /*#__PURE__*/_react.default.createElement(_Origin.default, {
-    country: "Bangaldesh"
-  }), /*#__PURE__*/_react.default.createElement(_Friends.default, {
-    friends: ['Shuvo', 'Adnan', 'Rohit']
-  }));
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Homepage.default, null));
 };
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./Component/Friends":"src/Component/Friends.js","./Component/Greetings":"src/Component/Greetings.js","./Component/Origin":"src/Component/Origin.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","./Component/Homepage":"src/Component/Homepage.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -29303,7 +29420,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64558" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52694" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
