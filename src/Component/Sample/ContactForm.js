@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import validator from "validator";
 import { v4 as uuidv4 } from "uuid";
-
+import {Navigate} from 'react-router-dom'
 class ContactForm extends Component {
   state = {
-    id:uuidv4(),
+    id: uuidv4(),
     firstName: "",
     lastName: "",
     email: "",
@@ -34,7 +34,7 @@ class ContactForm extends Component {
     ) {
       this.setState({
         errors: {
-          firstName: "PLease Provide Firstname Should be 3 to 5 character",
+          firstName: "Please Provide Firstname Should be 3 to 5 character",
         },
       });
       return;
@@ -70,6 +70,9 @@ class ContactForm extends Component {
     }
     // console.log(this.state)
     this.props.addContact(this.state);
+    // <Navigate to='/'/>
+    window.location.href = "/";
+
     this.setState({
       firstName: "",
       lastName: "",
@@ -77,7 +80,7 @@ class ContactForm extends Component {
       profession: "",
       seletedValue: "personal",
       errors: "",
-    })
+    });
 
     // console.log(this.props.editContact(this.state))
   };
@@ -93,7 +96,7 @@ class ContactForm extends Component {
     } = this.state;
     return (
       <>
-        <h4>Contact Form</h4>
+        <h4>Add Contact</h4>
         <form onSubmit={this.handleSubmit}>
           <div className="input-field">
             <label htmlFor="firstName">FirstName</label>
@@ -127,7 +130,7 @@ class ContactForm extends Component {
               value={email}
               name="email"
             />
-            {errors.email && errors.email}
+            <span className="helper-text">{errors.email && errors.email}</span>
           </div>
           <div className="input-field">
             <label htmlFor="profession">Profession</label>
@@ -137,7 +140,9 @@ class ContactForm extends Component {
               value={profession}
               name="profession"
             />
-            {errors.profession && errors.profession}
+            <span className="helper-text">
+              {errors.profession && errors.profession}
+            </span> 
           </div>
           <p>
             <label>

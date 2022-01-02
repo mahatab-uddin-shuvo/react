@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import validator from "validator";
 import { v4 as uuidv4 } from "uuid";
+import {Navigate} from 'react-router-dom'
 
 class EditContact extends Component {
   state = {
@@ -64,14 +65,14 @@ class EditContact extends Component {
     }
     // console.log(this.state)
     this.props.updateContact(this.state);
-    this.setState({
-      firstName: "",
-      lastName: "",
-      email: "",
-      profession: "",
-      seletedValue:"personal",
-      errors: "",
-    })
+    // this.setState({
+    //   firstName: "",
+    //   lastName: "",
+    //   email: "",
+    //   profession: "",
+    //   seletedValue:"personal",
+    //   errors: "",
+    // })
 
     // console.log(this.props.editContact(this.state))
   };
@@ -167,7 +168,7 @@ class EditContact extends Component {
             </label>
           </p>
           <button className="waves-effect waves-light btn" type="submit">
-            SUbmit
+            Submit
           </button>
         </form>
       </>

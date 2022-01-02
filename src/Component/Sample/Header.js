@@ -1,17 +1,23 @@
 import React, { Component } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 class Header extends Component {
   render() {
     return (
       <nav>
-        <div className="nav-wrapper">
-          <a href="#!" className="brand-logo">ContactApp</a>
+        <div className="nav-wrapper active">
+          <NavLink to="/" className="brand-logo">
+            ContactApp
+          </NavLink>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <a href="#!">Home</a>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <a href="#!">About</a>
+              <NavLink to="/add">Add Contact</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About</NavLink>
             </li>
           </ul>
         </div>

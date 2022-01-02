@@ -1,12 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './Component/App'
-import Add,{Sub, Multiply, num1, num2} from './Playground/Math'
-
-
-console.log(Add(num1,num2))
-console.log(Sub(num1,num2))
-console.log(Multiply(num1,num2))
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+import App from "./Component/App";
+import { ContactProvider } from "./Contexts/ContactContext";
+const router = (
+  <BrowserRouter>
+    <ContactProvider>
+      <App />
+    </ContactProvider>
+  </BrowserRouter>
+);
 
 //Rendering in DOM
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(router, document.getElementById("root"));
