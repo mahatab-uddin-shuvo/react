@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import {Link} from "react-router-dom";
+import {ContactContext} from "../../Contexts/ContactContext"
 
 class Contact extends Component {
+  static contextType = ContactContext
   state = {
     toggleContact: false,
   };
 
   handleDelete = (id) => () => {
-    this.props.deleteContact(id);
+    this.context.deleteContact(id);
   };
 
   handleEdit = (id) => ()=>{
-    this.props.editContact(id);
+    this.context.editContact(id);
+
   }
 
   handleToggleContact = () => {

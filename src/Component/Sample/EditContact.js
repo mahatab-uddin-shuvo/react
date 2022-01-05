@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import validator from "validator";
 import { v4 as uuidv4 } from "uuid";
 import {Navigate} from 'react-router-dom'
+import {ContactContext} from "../../Contexts/ContactContext"
 
 class EditContact extends Component {
+  static contextType = ContactContext
   state = {
-    id:this.props.editContact.id,
-    firstName: this.props.editContact.firstName,
-    lastName: this.props.editContact.lastName,
-    email: this.props.editContact.email,
-    profession: this.props.editContact.profession,
-    seletedValue: this.props.editContact.seletedValue,
+    id:this.context.state.selectedContact.id,
+    firstName: this.context.state.selectedContact.firstName,
+    lastName: this.context.state.selectedContact.lastName,
+    email: this.context.state.selectedContact.email,
+    profession: this.context.state.selectedContact.profession,
+    seletedValue: this.context.state.selectedContact.seletedValue,
     errors: {},
   };
 
@@ -64,7 +66,7 @@ class EditContact extends Component {
       return;
     }
     // console.log(this.state)
-    this.props.updateContact(this.state);
+    this.context.updateContact(this.state);
     // this.setState({
     //   firstName: "",
     //   lastName: "",

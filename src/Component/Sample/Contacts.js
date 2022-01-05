@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Contact from "./Contact";
-
+import {ContactContext} from "../../Contexts/ContactContext"
 class Contacts extends Component {
+  static contextType = ContactContext
   state = {
     searchText: "",
   };
@@ -13,7 +14,8 @@ class Contacts extends Component {
   };
 
   render() {
-    const filteredList = this.props.contacts.filter(
+    const {contacts} = this.context.state;
+    const filteredList = contacts.filter(
       (contact) =>
         contact.firstName.toLowerCase().indexOf(this.state.searchText) !== -1 ||
         contact.lastName.toLowerCase().indexOf(this.state.searchText) !== -1
@@ -46,8 +48,6 @@ class Contacts extends Component {
             <div className="col s6" key={contact.id}>
               <Contact
                 contact={contact}
-                deleteContact={this.props.deleteContact}
-                editContact={this.props.editContact}
               />
             </div>
           ))}

@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import validator from "validator";
 import { v4 as uuidv4 } from "uuid";
 import {Navigate} from 'react-router-dom'
+import {ContactContext} from "../../Contexts/ContactContext"
+
+
 class ContactForm extends Component {
+  static contextType = ContactContext
   state = {
     id: uuidv4(),
     firstName: "",
@@ -69,9 +73,9 @@ class ContactForm extends Component {
       return;
     }
     // console.log(this.state)
-    this.props.addContact(this.state);
+    this.context.addContact(this.state);
     // <Navigate to='/'/>
-    window.location.href = "/";
+    // window.location.href = "/";
 
     this.setState({
       firstName: "",
@@ -167,7 +171,7 @@ class ContactForm extends Component {
             </label>
           </p>
           <button className="waves-effect waves-light btn" type="submit">
-            SUbmit
+            Submit
           </button>
         </form>
       </>

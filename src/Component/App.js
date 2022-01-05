@@ -51,44 +51,17 @@ class App extends Component {
   static contextType = ContactContext;
 
   render() {
-    const { contacts, selectedContact } = this.context.state;
-    const {
-      addContact,
-      editContact,
-      updateContact,
-      deleteContact,
-    } = this.context;
+    const { selectedContact } = this.context.state;
     return (
       <div className="container">
         <Header />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Contacts
-                contacts={contacts}
-                deleteContact={deleteContact}
-                editContact={editContact}
-              />
-            }
-          />
-          <Route
-            path="/add"
-            element={<ContactForm addContact={addContact} />}
-          />
+          <Route path="/" element={<Contacts />} />
+          <Route path="/add" element={<ContactForm />} />
           <Route
             path="/edit/:id"
             element={
-              <>
-                {selectedContact ? (
-                  <EditContact
-                    editContact={selectedContact}
-                    updateContact={updateContact}
-                  />
-                ) : (
-                  <Navigate to="/" />
-                )}
-              </>
+              <>{selectedContact ? <EditContact /> : <Navigate to="/" />}</>
             }
           />
           <Route path="/about" element={<About />} />

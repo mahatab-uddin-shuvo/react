@@ -1,6 +1,16 @@
 import React, { Component } from "react";
-
 export const ContactContext = React.createContext();
+//will take existing state
+//modify and return based on action 
+const reducer = (state,action) =>{
+  if(action.type === 'ADD_COUNT'){
+    return{
+      ...state,
+      count:state.count+action.payload,
+    }
+  }
+}
+console.log(reducer({count:0, counting:false},{type:'ADD_COUNT',payload:1}));
 
 export class ContactProvider extends Component {
     state = {
